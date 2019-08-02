@@ -1,0 +1,5 @@
+/* Add application styles & imports to this file! */
+@import url('https://fonts.googleapis.com/css?family=Exo:600');
+body {
+  font-family: 'Exo', sans-serif;
+}
