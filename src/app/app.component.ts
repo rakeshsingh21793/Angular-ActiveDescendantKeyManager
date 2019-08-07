@@ -40,10 +40,6 @@ export class ListItemComponent implements Highlightable {
     return this._isActive;
   }
 
-  getLabel(): string {
-    return this.superhero;
-  }
-
   setActiveStyles() {
     this._isActive = true;
   }
