@@ -15,7 +15,6 @@ import { Highlightable, ActiveDescendantKeyManager } from '@angular/cdk/a11y';
   styles: [`
     :host {
       display: block;
-      margin: 1rem 0;
       padding: 1rem;
       background-color: #F2F2F2;
       transition: all 0.3s;
@@ -25,8 +24,7 @@ import { Highlightable, ActiveDescendantKeyManager } from '@angular/cdk/a11y';
 
     :host.active {
       background-color: #292929;
-      color: #ffffff;
-      transform: translateX(1rem);
+      color: #FFFFFF;
     }
   `],
   template: `
@@ -40,15 +38,15 @@ export class ListItemComponent implements Highlightable {
 
   @HostBinding('class.active') get isActive() {
     return this._isActive;
-  };
+  }
 
   getLabel(): string {
     return this.superhero;
-  }  
+  }
 
   setActiveStyles() {
     this._isActive = true;
-  };
+  }
 
   setInactiveStyles() {
     this._isActive = false;
@@ -59,8 +57,9 @@ export class ListItemComponent implements Highlightable {
   selector: 'app-list',
   styles: [`
     :host {
-      display: block;
-      max-width: 30rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      grid-gap: 12px;
     }
   `],
   template: `
@@ -77,8 +76,13 @@ export class ListComponent implements AfterContentInit {
   }
 
   ngAfterContentInit(): void {
-    this.keyManager = new ActiveDescendantKeyManager(this.items).withWrap();
-    this.keyManager.setFirstItemActive();
+    this.keyManager = new ActiveDescendantKeyManager(this.items)
+      .withWrap()
+      .withHorizontalOrientation("ltr")
+      .withVerticalOrientation(false);
+    setTimeout(() => {
+      this.keyManager.setFirstItemActive();
+    });
   }
 }
 
@@ -94,17 +98,18 @@ export class ListComponent implements AfterContentInit {
     <h1>Superheroes</h1>
     
     <app-list>
-      <app-list-item *ngFor="let superhero of superheroes" [superhero]="superhero"></app-list-item>
+      <app-list-item *ngFor="let superhero of superheroes" [superhero]="superhero">
+      </app-list-item>
     </app-list>
   `,
 })
-export class AppComponent  {
+export class AppComponent {
   superheroes = [
     'Captain America',
     'Iron Man',
     'Thor',
     'Hulk',
-    'Wonder Woman',
+    'Antman',
     'Batman',
     'Spiderman'
   ];
